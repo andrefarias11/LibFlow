@@ -30,6 +30,22 @@ LibFlow é uma API REST para gerenciamento de livros e autores. A API permite li
  ┗ 📂 Dto
 ```
 
+## 📖 Regras de Negócio
+
+### 📚 Gerenciamento de Livros
+- Cada livro deve ter um título e estar vinculado a um autor existente.
+- Um livro pode ser atualizado ou removido somente se existir no sistema.
+
+### ✍️ Gerenciamento de Autores
+- Um autor deve ter um nome e um sobrenome.
+- Não é possível excluir um autor se ele estiver associado a um ou mais livros.
+
+### 🔖 Reserva de Livros (a ser implementado)
+- O usuário informa o nome do livro e seu e-mail.
+- A API publica uma mensagem em uma fila de mensagens (RabbitMQ).
+- Um serviço consome essa mensagem e envia um e-mail ao usuário confirmando a reserva do livro.
+- O livro não será removido ou bloqueado no sistema após a reserva (apenas uma notificação será enviada).
+
 ## ⚡ Instalação e Configuração
 
 1. Clone este repositório:
