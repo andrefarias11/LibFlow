@@ -33,7 +33,7 @@ public class AuthorController : ControllerBase
     }
 
     // GET api/authors/{bookId}
-    [HttpGet("{bookId}")]
+    [HttpGet("by-author/{bookId}")]
     public async Task<ActionResult<ResponseModel<AuthorModel>>> GetByBookId(int bookId)
     {
         var author = await _authorService.GetAuthorByBookId(bookId);
