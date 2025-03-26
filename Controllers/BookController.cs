@@ -30,7 +30,6 @@ namespace LibFlow.Controllers
             return Ok(book);
         }
 
-        // Alteração: Adicionar um prefixo para diferenciar a rota
         [HttpGet("by-author/{authorId}")]
         public async Task<ActionResult<ResponseModel<List<BookModel>>>> GetBooksByAuthorId(int authorId)
         {

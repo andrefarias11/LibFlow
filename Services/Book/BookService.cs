@@ -2,6 +2,8 @@
 using LibFlow.Dto.Author;
 using LibFlow.Dto.Book;
 using LibFlow.Models;
+using LibFlow.Resorces.Author;
+using LibFlow.Resorces.Book;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibFlow.Services.Book;
@@ -22,7 +24,7 @@ public class BookService : IBookInterface
             List<BookModel> books = await _context.Books.ToListAsync();
 
             response.Data = books;
-            response.Message = "Books found";
+            response.Message = BookMsg.DISP0001;
         }
         catch (Exception ex)
         {
@@ -43,12 +45,12 @@ public class BookService : IBookInterface
 
             if (book is null)
             {
-                resposta.Message = "Book not found";
+                resposta.Message = BookMsg.DISP0002;
                 return resposta;
             }
 
             resposta.Data = book;
-            resposta.Message = "Book found";
+            resposta.Message = BookMsg.DISP0003;
 
             return resposta;
 
@@ -72,12 +74,12 @@ public class BookService : IBookInterface
 
             if (books is null)
             {
-                resposta.Message = "Books not found";
+                resposta.Message = BookMsg.DISP0002;
                 return resposta;
             }
 
             resposta.Data = books;
-            resposta.Message = "Books found";
+            resposta.Message = BookMsg.DISP0001;
             return resposta;
         }
         catch (Exception ex)
@@ -94,11 +96,11 @@ public class BookService : IBookInterface
         try
         {
             var author = await _context.Authors
-                .FirstOrDefaultAsync(x => x.Id == createBookDTO.Autor.Id);
+                .FirstOrDefaultAsync(x => x.Id == createBookDTO.Author.Id);
 
             if (author is null)
             {
-                resposta.Message = "No author record found!";
+                resposta.Message = BookMsg.DISP0004;
                 return resposta;
             }
 
@@ -133,21 +135,21 @@ public class BookService : IBookInterface
                  .FirstOrDefaultAsync(x => x.Id == updateBookDTO.Id);
 
             var author = await _context.Authors
-                 .FirstOrDefaultAsync(x => x.Id == updateBookDTO.Autor.Id);
+                 .FirstOrDefaultAsync(x => x.Id == updateBookDTO.Author.Id);
 
             if (author is null)
             {
-                resposta.Message = "Nenhum registro de autor localizado!";
+                resposta.Message = AuthorMsg.DISP0004;
                 return resposta;
             }
 
             if (book is null)
             {
-                resposta.Message = "Nenhum registro de livro localizado!";
+                resposta.Message = BookMsg.DISP0002;
                 return resposta;
             }
 
-            book.Title = updateBookDTO.Titulo;
+            book.Title = updateBookDTO.Title;
             book.Author = author;
 
             _context.Update(book);
@@ -175,7 +177,7 @@ public class BookService : IBookInterface
 
             if (book is null)
             {
-                resposta.Message = "No book found!";
+                resposta.Message = BookMsg.DISP0002;
                 return resposta;
             }
 
@@ -183,7 +185,7 @@ public class BookService : IBookInterface
             await _context.SaveChangesAsync();
 
             resposta.Data = await _context.Books.ToListAsync();
-            resposta.Message = "Book removed successfully!";
+            resposta.Message = BookMsg.DISP0005;
 
             return resposta;
 

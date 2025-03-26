@@ -49,7 +49,7 @@ public class RabbitMqPublisher : IRabbitMqPublisher
         var messageBody = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
         var properties = channel.CreateBasicProperties();
-        properties.Persistent = true; // Garante que a mensagem não será perdida
+        properties.Expiration = "10000";
 
         // Publicando mensagem
         channel.BasicPublish(

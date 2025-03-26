@@ -16,7 +16,6 @@ public class AuthorController : ControllerBase
         _authorService = authorService;
     }
 
-    // GET api/authors
     [HttpGet]
     public async Task<ActionResult<ResponseModel<List<AuthorModel>>>> GetAll()
     {
@@ -24,7 +23,6 @@ public class AuthorController : ControllerBase
         return Ok(authors);
     }
 
-    // GET api/authors/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<ResponseModel<AuthorModel>>> GetById(int id)
     {
@@ -32,7 +30,6 @@ public class AuthorController : ControllerBase
         return Ok(author);
     }
 
-    // GET api/authors/{bookId}
     [HttpGet("by-author/{bookId}")]
     public async Task<ActionResult<ResponseModel<AuthorModel>>> GetByBookId(int bookId)
     {
@@ -40,7 +37,6 @@ public class AuthorController : ControllerBase
         return Ok(author);
     }
 
-    // POST api/authors
     [HttpPost]
     public async Task<ActionResult<ResponseModel<List<AuthorModel>>>> Create([FromBody] CreateAuthorDTO createAuthorDTO)
     {
@@ -48,7 +44,6 @@ public class AuthorController : ControllerBase
         return Ok(author);
     }
 
-    // PUT api/authors/{id}
     [HttpPut("{id}")]
     public async Task<ActionResult<ResponseModel<List<AuthorModel>>>> Update(int id, [FromBody] UpdateAuthorDTO updateAuthorDTO)
     {
@@ -56,7 +51,6 @@ public class AuthorController : ControllerBase
         return Ok(author);
     }
 
-    // DELETE api/authors/{id}
     [HttpDelete("{id}")]
     public async Task<ActionResult<ResponseModel<List<AuthorModel>>>> Delete(int id)
     {

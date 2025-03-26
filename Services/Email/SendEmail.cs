@@ -49,5 +49,15 @@ namespace LibFlow.Services.Email
                 throw new InvalidOperationException(e.Message);
             }
         }
+        public string LoadEmailTemplate(string bookName)
+        {
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", "EmailTemplate.html");
+
+            if (!File.Exists(templatePath))
+                throw new FileNotFoundException("Template de e-mail não encontrado!");
+
+            var templateContent = File.ReadAllText(templatePath);
+            return templateContent.Replace("{{BookName}}", bookName);
+        }
     }
 }

@@ -37,10 +37,8 @@ namespace LibFlow.Services.RabbitMq
                 var message = Encoding.UTF8.GetString(body);
                 var reservation = JsonSerializer.Deserialize<BookReservationMessage>(message);
 
-                Console.WriteLine($"Recebido: {reservation.BookName} para {reservation.Email}");
-
-                // Enviar e-mail de confirmação
-                await _emailService.SendEmailAsync(reservation.Email, $"Livro {reservation.BookName} reservado", $"Seu livro {reservation.BookName} foi reservado com sucesso!");
+                var emailBody = _emailService.LoadEmailTemplate(reservation.BookName);
+                await _emailService.SendEmailAsync(reservation.Email, $"Livro {reservation.BookName} reservado", emailBody);
 
                 _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
             };

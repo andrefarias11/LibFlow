@@ -2,6 +2,7 @@
 using LibFlow.Data;
 using LibFlow.Dto.Author;
 using LibFlow.Models;
+using LibFlow.Resorces.Author;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibFlow.Services.Author;
@@ -23,7 +24,7 @@ public class AuthorService : IAuthorInterface
             List<AuthorModel> authors = await _context.Authors.ToListAsync();
 
             response.Data = authors;
-            response.Message = "Authors found";
+            response.Message = AuthorMsg.DISP0001;
         }
         catch (Exception ex)
         {
@@ -46,12 +47,12 @@ public class AuthorService : IAuthorInterface
             if (author is null)
             {
                 response.Status = false;
-                response.Message = "Book not found";
+                response.Message = AuthorMsg.DISP0003;
                 return response;
             }
 
             response.Data = author.Author;
-            response.Message = "Author found";
+            response.Message = AuthorMsg.DISP0002;
 
             return response;
         }
@@ -73,12 +74,12 @@ public class AuthorService : IAuthorInterface
             if (author is null)
             {
                 response.Status = false;
-                response.Message = "Author not found";
+                response.Message = AuthorMsg.DISP0004;
                 return response;
             }
 
             response.Data = author;
-            response.Message = "Author found";
+            response.Message = AuthorMsg.DISP0002;
             return response;
         }
         catch (Exception ex)
@@ -104,7 +105,7 @@ public class AuthorService : IAuthorInterface
             await _context.SaveChangesAsync();
 
             response.Data = await _context.Authors.ToListAsync();
-            response.Message = "Author inserted";
+            response.Message = AuthorMsg.DISP0005;
 
             return response;
         }
@@ -127,10 +128,9 @@ public class AuthorService : IAuthorInterface
 
             if (author is null)
             {
-                response.Message = "Nenhum autor localizado!";
+                response.Message = AuthorMsg.DISP0004;
                 return response;
-            }
-            ;
+            };
 
             author.Name = updateAuthorDTO.Name;
             author.Surname = updateAuthorDTO.Surname;
@@ -139,7 +139,7 @@ public class AuthorService : IAuthorInterface
             await _context.SaveChangesAsync();
 
             response.Data = await _context.Authors.ToListAsync();
-            response.Message = "Author updated";
+            response.Message = AuthorMsg.DISP0006;
 
             return response;
         }
@@ -162,14 +162,14 @@ public class AuthorService : IAuthorInterface
 
             if (author is null)
             {
-                response.Message = "Author not found";
+                response.Message = AuthorMsg.DISP0004;
                 return response;
             };
             _context.Authors.Remove(author);
             _context.SaveChanges();
 
             response.Data = await _context.Authors.ToListAsync();
-            response.Message = "Author deleted";
+            response.Message = AuthorMsg.DISP0007;
             return response;
         }
         catch (Exception ex)
