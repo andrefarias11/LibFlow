@@ -34,12 +34,10 @@ public class RabbitMqPublisher : IRabbitMqPublisher
         using var connection = _factory.CreateConnection();
         using var channel = connection.CreateModel();
 
-        // Declaração da Exchange e da Fila (garante que existem)
         channel.ExchangeDeclare(_exchangeName, ExchangeType.Direct, durable: true);
         channel.QueueDeclare(_queueName, durable: true, exclusive: false, autoDelete: false);
         channel.QueueBind(_queueName, _exchangeName, _routingKey);
 
-        // Criando mensagem JSON
         var message = new
         {
             BookName = bookName,
@@ -51,7 +49,6 @@ public class RabbitMqPublisher : IRabbitMqPublisher
         var properties = channel.CreateBasicProperties();
         properties.Expiration = "10000";
 
-        // Publicando mensagem
         channel.BasicPublish(
             exchange: _exchangeName,
             routingKey: _routingKey,

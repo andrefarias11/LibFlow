@@ -12,7 +12,7 @@ namespace LibFlow.Services
         {
             _factory = new ConnectionFactory()
             {
-                HostName = "localhost", // ou o endereço do seu RabbitMQ
+                HostName = "localhost", 
                 UserName = "guest",
                 Password = "guest"
             };
